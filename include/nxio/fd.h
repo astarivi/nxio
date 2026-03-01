@@ -53,8 +53,6 @@ int nxcrt_fd_install(nxcrt_file_t *file);
 
 // Internal API
 void nxcrt_fd_close_underlying(nxcrt_file_t *file);
-int nxcrt_fd_dup(int oldfd);
-int nxcrt_fd_dup2(int oldfd, int newfd);
 
 void nxcrt_fd_runtime_init(void);
 
