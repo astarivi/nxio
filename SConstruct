@@ -113,7 +113,7 @@ for src in dynamic_sources:
         else:
             target_env = posix_env
 
-        obj = env.Object(target=os.path.join(INTERMEDIATE_DIR, obj_name), source=src)
+        obj = target_env.Object(target=os.path.join(INTERMEDIATE_DIR, obj_name), source=src)
         objs.append(obj)
 
 lib = env.Library(

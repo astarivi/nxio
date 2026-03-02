@@ -34,7 +34,7 @@ static int nxio_write_internal(int fd, const void *buf, unsigned int cnt)
 #ifdef NXIO_POSIX
 
 ssize_t nxio_write_posix(int fd, void *buf, size_t cnt) {
-    if (count > UINT_MAX) {
+    if (cnt > UINT_MAX) {
         errno = EINVAL;
         return -1;
     }

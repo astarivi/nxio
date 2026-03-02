@@ -34,7 +34,7 @@ static int nxio_read_internal(int fd, void *buf, unsigned int cnt)
 #ifdef NXIO_POSIX
 
 ssize_t nxio_read_posix(int fd, void *buf, size_t cnt) {
-    if (count > UINT_MAX) {
+    if (cnt > UINT_MAX) {
         errno = EINVAL;
         return -1;
     }
