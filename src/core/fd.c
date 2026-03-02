@@ -3,18 +3,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "errno.h"
-#include "fcntl.h"
 #include "nxio/fd.h"
-
 #include "nxio/log.h"
 
+#include "errno.h"
+#include "fcntl.h"
 
 nxcrt_fd_t nxcrt_fd_table[NXCRT_MAX_FDS];
 CRITICAL_SECTION nxcrt_fd_table_lock;
 
 static void nxcrt_fd_close_underlying(nxcrt_file_t *file);
-
 
 void nxcrt_fd_runtime_init(void)
 {

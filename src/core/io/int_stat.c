@@ -1,10 +1,10 @@
 #include <windows.h>
 
-#include "errno.h"
-#include "sys/stat.h"
-
 #include "nxio/lk.h"
 #include "nxio/errno_win32.h"
+
+#include "errno.h"
+#include "sys/stat.h"
 
 static int64_t nxcrt_filetime_to_unix(const FILETIME *ft)
 {

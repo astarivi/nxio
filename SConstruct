@@ -74,6 +74,7 @@ static_sources = [
     'src/io/dup.c',
     'src/io/open.c',
     'src/io/unlink.c',
+    'src/io/access.c',
     'src/fcntl.c',
 ]
 

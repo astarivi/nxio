@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stdio.h>
+#include <stdio.h> // SEEK_
 
 #include "sys/types.h"
 
@@ -8,9 +8,21 @@
 extern "C" {
 #endif
 
-// #define SEEK_SET 0
-// #define SEEK_CUR 1
-// #define SEEK_END 2
+#ifndef F_OK
+#define F_OK 0
+#endif
+
+#ifndef X_OK
+#define X_OK 1
+#endif
+
+#ifndef W_OK
+#define W_OK 2
+#endif
+
+#ifndef R_OK
+#define R_OK 4
+#endif
 
 int nxio_open(const char *path, int oflag, ...);
 int nxio_sopen(const char *path, int oflag, int shflag, ...);
@@ -18,6 +30,7 @@ int nxio_unlink(const char *path);
 int nxio_close(int fd);
 int nxio_dup(int fd);
 int nxio_dup2(int oldfd, int newfd);
+int nxio_access(const char *path, int amode);
 
 #ifdef NXIO_POSIX
 
@@ -37,6 +50,7 @@ int nxio_dup2(int oldfd, int newfd);
     #define dup nxio_dup
     #define dup2 nxio_dup2
     #define write nxio_write_posix
+    #define access nxio_access
 
 #else // NXIO_POSIX
 
@@ -63,6 +77,8 @@ int nxio_dup2(int oldfd, int newfd);
     #define _dup2 nxio_dup2
 
     #define _write nxio_write32
+
+    #define _access nxio_access
 
 #endif // NXIO_POSIX
 

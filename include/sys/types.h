@@ -31,6 +31,7 @@
     typedef int32_t  gid_t;
 
     typedef intptr_t ssize_t;
+    #define SSIZE_MAX INTPTR_MAX
 
 #else // NXIO_POSIX
 
