@@ -25,8 +25,8 @@ extern "C" {
     int     nxio_access(const char *path, int amode);
 
     off_t   nxio_lseek(int fd, off_t offset, int whence);
-    ssize_t nxio_read(int fd, void *buf, size_t count);
-    ssize_t nxio_write(int fd, const void *buf, size_t count);
+    ssize_t nxio_read_posix(int fd, void *buf, size_t count);
+    ssize_t nxio_write_posix(int fd, const void *buf, size_t count);
 
     #define close   nxio_close
     #define dup     nxio_dup
@@ -35,8 +35,8 @@ extern "C" {
     #define access  nxio_access
 
     #define lseek   nxio_lseek
-    #define read    nxio_read
-    #define write   nxio_write
+    #define read    nxio_read_posix
+    #define write   nxio_write_posix
 
 #else /* NXIO_POSIX */
 
