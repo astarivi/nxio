@@ -1,4 +1,5 @@
 #include <windows.h>
+#include <stdio.h>
 
 #include "nxio/fd.h"
 #include "nxio/lk.h"
@@ -24,12 +25,12 @@ int nxio_write_lk(nxcrt_file_t *file, const void *buf, unsigned int cnt)
         return -1;
     }
 
-    if (file->flags & O_APPEND) {
+    if (file->flags & NX_O_APPEND) {
         if (nxio_lseek_lk(file, (off_t)0, SEEK_END) < 0)
             return -1;
     }
 
-    if (!(file->flags & O_TEXT)) {
+    if (!(file->flags & NX_O_TEXT)) { // _O_TEXT
 
         DWORD written = 0;
 

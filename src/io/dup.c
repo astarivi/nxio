@@ -3,6 +3,7 @@
 #include "nxio/fd.h"
 
 #include "io.h"
+#include "unistd.h"
 #include "errno.h"
 
 int nxio_dup(int oldfd)

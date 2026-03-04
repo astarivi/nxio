@@ -8,8 +8,6 @@ int *__nxcrt_errno_location(void);
 
 #define errno (*__nxcrt_errno_location())
 
-/* Common error codes */
-
 #define	EPERM		 1	/* Operation not permitted */
 #define	ENOENT		 2	/* No such file or directory */
 #define	ESRCH		 3	/* No such process */

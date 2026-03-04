@@ -6,6 +6,7 @@
 #include "nxio/errno_win32.h"
 
 #include "io.h"
+#include "unistd.h"
 #include "errno.h"
 #include "sys/types.h"
 

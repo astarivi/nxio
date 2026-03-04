@@ -5,6 +5,7 @@
 #include "nxio/errno_win32.h"
 
 #include "io.h"
+#include "unistd.h"
 #include "fcntl.h"
 #include "errno.h"
 
@@ -14,8 +15,8 @@ static int nxio_read_internal(int fd, void *buf, unsigned int cnt)
     if (!file)
         return -1;
     
-    int acc = file->flags & O_ACCMODE;
-    if (acc != O_RDONLY && acc != O_RDWR) {
+    int acc = file->flags & NX_O_ACCMODE;
+    if (acc != NX_O_RDONLY && acc != NX_O_RDWR) {
         errno = EBADF;
         nxcrt_fd_release(fd);
         return -1;

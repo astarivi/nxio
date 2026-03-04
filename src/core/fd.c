@@ -20,7 +20,7 @@ void nxcrt_fd_runtime_init(void)
     InitializeCriticalSection(&nxcrt_fd_table_lock);
     memset(nxcrt_fd_table, 0, sizeof(nxcrt_fd_table));
     FILE *std_files[3] = { stdin, stdout, stderr };
-    int std_flags[3]   = { O_RDONLY, O_WRONLY, O_WRONLY };
+    int std_flags[3]   = { NX_O_RDONLY, NX_O_WRONLY, NX_O_WRONLY };
     for (int i = 0; i < 3 && i < NXCRT_MAX_FDS; ++i)
     {
         nxcrt_file_t *file = nxcrt_file_create(

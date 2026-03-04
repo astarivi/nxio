@@ -1,4 +1,5 @@
 #include <windows.h>
+#include <stdio.h>
 
 #include "nxio/fd.h"
 #include "nxio/lk.h"
@@ -45,7 +46,7 @@ int nxio_read_lk(nxcrt_file_t *file, void *buf, unsigned int cnt)
 
     file->offset += os_read;
 
-    if (!(file->flags & O_TEXT))
+    if (!(file->flags & NX_O_TEXT))
         return (int)os_read;
 
     char *p = buffer;

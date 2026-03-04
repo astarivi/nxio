@@ -121,4 +121,12 @@ lib = env.Library(
     source=objs,
 )
 
+oldnames = env.Command(
+    target='build/nxoldnames.lib',
+    source='src/nxoldnames.def',
+    action='llvm-lib /def:$SOURCE /out:$TARGET /machine:i386'
+)
+
+env.Depends(lib, oldnames)
+
 Default(lib)

@@ -65,7 +65,7 @@ int stat(const char *path, struct stat *buf)
         return -1;
     }
 
-    int fd = nxio_sopen_impl(path, O_RDONLY, SH_DENYNO, 0);
+    int fd = nxio_sopen_impl(path, NX_O_RDONLY, NX_SH_DENYNO, 0);
     if (fd < 0) {
         return -1;
     }
@@ -146,7 +146,7 @@ int _stat(const char *path, struct _stat *buf)
         return -1;
     }
 
-    int fd = nxio_sopen_impl(path, O_RDONLY, SH_DENYNO, 0);
+    int fd = nxio_sopen_impl(path, NX_O_RDONLY, NX_SH_DENYNO, 0);
     if (fd < 0) {
         return -1;
     }
@@ -174,7 +174,7 @@ int _stati64(const char *path, struct _stati64 *buf)
         return -1;
     }
 
-    int fd = nxio_sopen_impl(path, O_RDONLY, SH_DENYNO, 0);
+    int fd = nxio_sopen_impl(path, NX_O_RDONLY, NX_SH_DENYNO, 0);
     if (fd < 0) {
         return -1;
     }
@@ -202,7 +202,7 @@ int _stat64(const char *path, struct _stat64 *buf)
         return -1;
     }
 
-    int fd = nxio_sopen_impl(path, O_RDONLY, SH_DENYNO, 0);
+    int fd = nxio_sopen_impl(path, NX_O_RDONLY, NX_SH_DENYNO, 0);
     if (fd < 0) {
         return -1;
     }

@@ -3,6 +3,7 @@
 #include "nxio/errno_win32.h"
 
 #include "io.h"
+#include "unistd.h"
 #include "errno.h"
 
 int nxio_unlink(const char *path)

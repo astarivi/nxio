@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "nxio/fd.h"
 #include "nxio/lk.h"
@@ -21,21 +22,21 @@ int nxio_sopen_impl(const char *path,
     DWORD creation = 0;
     DWORD attributes = FILE_ATTRIBUTE_NORMAL;
 
-    if ((oflag & O_EXCL) && !(oflag & O_CREAT)) {
+    if ((oflag & NX_O_EXCL) && !(oflag & NX_O_CREAT)) {
         errno = EINVAL;
         return -1;
     }
 
-    switch (oflag & O_ACCMODE) {
-        case O_RDONLY:
+    switch (oflag & NX_O_ACCMODE) {
+        case NX_O_RDONLY:
             access = GENERIC_READ;
             break;
 
-        case O_WRONLY:
+        case NX_O_WRONLY:
             access = GENERIC_WRITE;
             break;
 
-        case O_RDWR:
+        case NX_O_RDWR:
             access = GENERIC_READ | GENERIC_WRITE;
             break;
 
@@ -44,23 +45,23 @@ int nxio_sopen_impl(const char *path,
             return -1;
     }
 
-    if (oflag & O_TRUNC)
+    if (oflag & NX_O_TRUNC)
         access |= GENERIC_WRITE;
 
     switch (shflag) {
-        case SH_DENYRW:
+        case NX_SH_DENYRW:
             share = 0;
             break;
 
-        case SH_DENYWR:
+        case NX_SH_DENYWR:
             share = FILE_SHARE_READ;
             break;
 
-        case SH_DENYRD:
+        case NX_SH_DENYRD:
             share = FILE_SHARE_WRITE;
             break;
 
-        case SH_DENYNO:
+        case NX_SH_DENYNO:
             share = FILE_SHARE_READ | FILE_SHARE_WRITE;
             break;
 
@@ -69,29 +70,29 @@ int nxio_sopen_impl(const char *path,
             return -1;
     }
 
-    switch (oflag & (O_CREAT | O_EXCL | O_TRUNC)) {
+    switch (oflag & (NX_O_CREAT | NX_O_EXCL | NX_O_TRUNC)) {
 
         case 0:
             creation = OPEN_EXISTING;
             break;
 
-        case O_CREAT:
+        case NX_O_CREAT:
             creation = OPEN_ALWAYS;
             break;
 
-        case O_CREAT | O_EXCL:
+        case NX_O_CREAT | NX_O_EXCL:
             creation = CREATE_NEW;
             break;
 
-        case O_TRUNC:
+        case NX_O_TRUNC:
             creation = TRUNCATE_EXISTING;
             break;
 
-        case O_CREAT | O_TRUNC:
+        case NX_O_CREAT | NX_O_TRUNC:
             creation = CREATE_ALWAYS;
             break;
 
-        case O_CREAT | O_TRUNC | O_EXCL:
+        case NX_O_CREAT | NX_O_TRUNC | NX_O_EXCL:
             creation = CREATE_NEW;
             break;
 
@@ -100,20 +101,20 @@ int nxio_sopen_impl(const char *path,
             return -1;
     }
 
-    if (oflag & O_CREAT) {
+    if (oflag & NX_O_CREAT) {
         if (!(pmode & _S_IWRITE))
             attributes |= FILE_ATTRIBUTE_READONLY;
     }
 
-    if (oflag & _O_TEMPORARY) {
+    if (oflag & NX_O_TEMPORARY) {
         attributes |= FILE_FLAG_DELETE_ON_CLOSE;
         access |= DELETE;
         share |= FILE_SHARE_DELETE;
     }
 
-    if (oflag & _O_SEQUENTIAL)
+    if (oflag & NX_O_SEQUENTIAL)
         attributes |= FILE_FLAG_SEQUENTIAL_SCAN;
-    else if (oflag & _O_RANDOM)
+    else if (oflag & NX_O_RANDOM)
         attributes |= FILE_FLAG_RANDOM_ACCESS;
 
     HANDLE h = CreateFileA(
@@ -143,17 +144,8 @@ int nxio_sopen_impl(const char *path,
         return -1;
     }
 
-    file->status_flags = NXCRT_FOPEN;
-
-    // Currently unused, we honor file flags as per MSVC implementation.
-    if (oflag & O_TEXT)
-        file->status_flags |= NXCRT_FTEXT;
-
-    if (oflag & O_APPEND)
-        file->status_flags |= NXCRT_FAPPEND;
-
-
-    if (oflag & O_APPEND) {
+    if (oflag & NX_O_APPEND)
+    {
         off_t pos = nxio_lseek_lk(file, 0, SEEK_END);
         if (pos == (off_t)-1) {
             nxcrt_fd_close_underlying(file);
@@ -181,20 +173,20 @@ int nxio_open(const char *path, int oflag, ...)
     va_list ap;
     int pmode = 0;
 
-    if (oflag & O_CREAT) {
+    if (oflag & NX_O_CREAT) {
         va_start(ap, oflag);
         pmode = va_arg(ap, int);
         va_end(ap);
     }
 
-    return nxio_sopen(path, oflag, SH_DENYNO, pmode);
+    return nxio_sopen(path, oflag, NX_SH_DENYNO, pmode);
 }
 
 int nxio_sopen(const char *path, int oflag, int shflag, ...)
 {
     int pmode = 0;
 
-    if (oflag & O_CREAT) {
+    if (oflag & NX_O_CREAT) {
         va_list ap;
         va_start(ap, shflag);
         pmode = va_arg(ap, int);

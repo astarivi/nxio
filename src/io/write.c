@@ -5,6 +5,7 @@
 #include "nxio/errno_win32.h"
 
 #include "io.h"
+#include "unistd.h"
 #include "fcntl.h"
 #include "errno.h"
 
@@ -14,8 +15,8 @@ static int nxio_write_internal(int fd, const void *buf, unsigned int cnt)
     if (!file)
         return -1;
 
-    int acc = file->flags & O_ACCMODE;
-    if (acc != O_WRONLY && acc != O_RDWR) {
+    int acc = file->flags & NX_O_ACCMODE;
+    if (acc != NX_O_WRONLY && acc != NX_O_RDWR) {
         errno = EBADF;
         nxcrt_fd_release(fd);
         return -1;
@@ -49,7 +50,7 @@ ssize_t nxio_write_posix(int fd, void *buf, size_t cnt) {
 
 #else // NXIO_POSIX
 
-int nxio_write32(int fd, void *buf, unsigned int cnt) {
+int nxio_write32(int fd, const void *buf, unsigned int cnt) {
     return nxio_write_internal(fd, buf, cnt);
 }
 

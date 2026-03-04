@@ -12,11 +12,7 @@ extern "C" {
 #define NXCRT_MAX_FDS 64
 #endif
 
-#define NXCRT_FOPEN      0x0001
 #define NXCRT_FEOFLAG    0x0002
-#define NXCRT_FAPPEND    0x0004
-#define NXCRT_FTEXT      0x0008
-#define NXCRT_FNOINHERIT 0x0010
 
 typedef enum {
     NXCRT_FD_TYPE_NONE = 0,

@@ -3,6 +3,7 @@
 #include "nxio/errno_win32.h"
 
 #include "io.h"
+#include "unistd.h"
 #include "errno.h"
 
 int nxio_access(const char *path, int amode)
@@ -18,11 +19,11 @@ int nxio_access(const char *path, int amode)
         return -1;
     }
 
-    if (amode == F_OK)
+    if (amode == NX_F_OK)
         return 0;
 
     // Best effort
-    if ((amode & W_OK) &&
+    if ((amode & NX_W_OK) &&
         (attr & FILE_ATTRIBUTE_READONLY) &&
         !(attr & FILE_ATTRIBUTE_DIRECTORY))
     {

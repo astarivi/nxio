@@ -24,6 +24,8 @@ I/O abstraction layer extensions for NXDK. Provides implementations for standard
 - No std support
 - No pipes support
 - No devices support
+- No async IO support
+- No non-blocking IO support
 
 ## Building
 
