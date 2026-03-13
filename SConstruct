@@ -36,7 +36,7 @@ env.Append(CFLAGS=[
 
     '-O2',
 #    '-flto',
-    '-finline-functions'
+#    '-finline-functions'
 ])
 
 env.Append(CPPDEFINES=[
@@ -83,6 +83,7 @@ dynamic_sources = [
     'src/io/read.c',
     'src/io/stat.c',
     'src/io/write.c',
+    'src/time.c',
 ]
 
 posix_env = env.Clone()
@@ -120,13 +121,5 @@ lib = env.Library(
     target='build/nxio.lib',
     source=objs,
 )
-
-oldnames = env.Command(
-    target='build/nxoldnames.lib',
-    source='src/nxoldnames.def',
-    action='llvm-lib /def:$SOURCE /out:$TARGET /machine:i386'
-)
-
-env.Depends(lib, oldnames)
 
 Default(lib)

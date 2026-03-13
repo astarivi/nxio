@@ -91,7 +91,7 @@ extern "C" {
     #define fcntl nxio_fcntl
     #define open nxio_open
 
-#else /* NXIO_POSIX */
+#else // NXIO_POSIX
 
     #define _O_RDONLY      NX_O_RDONLY
     #define _O_WRONLY      NX_O_WRONLY
@@ -107,7 +107,7 @@ extern "C" {
     #define _O_SEQUENTIAL  NX_O_SEQUENTIAL
     #define _O_TEMPORARY   NX_O_TEMPORARY
 
-    /* Text/binary mode */
+    // Text/binary mode
     #define _O_TEXT     NX_O_TEXT
     #define _O_BINARY   0
     #define _O_RAW      0
@@ -123,7 +123,7 @@ extern "C" {
     * fcntl is not a part of VC7 feature-set.
     */
 
-#endif /* !NXIO_POSIX */
+#endif // !NXIO_POSIX
 
 #ifdef __cplusplus
 }
